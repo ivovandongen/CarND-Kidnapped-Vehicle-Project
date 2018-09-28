@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
-project(TEMPLATE)
+project(ParticleFilter)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 
 # CMake modules
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
@@ -45,11 +45,11 @@ add_subdirectory(src)
 
 # Main executable
 
-add_executable(Template
+add_executable(particle_filter
     ${CMAKE_SOURCE_DIR}/src/main.cpp
     )
 
-target_link_libraries(Template core)
+target_link_libraries(particle_filter core)
 
 
 # Tests

@@ -1,16 +1,16 @@
 ## Build
-- `#>` `git submodule update --init --recursive`
+
+### From zip file with dependencies included
+- `#>` `mkdir build && cd build && cmake .. && make`
+- `#>` `./particle_filter`
+
+### From clean clone
 - `#>` `mkdir build && cd build && cmake .. -DGIT_SUBMODULE=ON && make`
-- `#>` `./Template`
+- `#>` `./particle_filter`
 
-## Usage as template:
-- `#>` `git init`
-- `#>` `git remote add template git@github.com:ivovandongen/CarND-term2-template.git`
-- `#>` `git remote add origin <your remote>`
-- `#>` `git fetch template`
-- `#>` `git checkout -b master template/master`
 
-Then adapt and use build instructions above
+### Original scripts:
 
-Pushing changes to your own repo:
-- `#>` `git push -u origin master`
+1. ./clean.sh
+2. ./build.sh
+3. ./run.sh
