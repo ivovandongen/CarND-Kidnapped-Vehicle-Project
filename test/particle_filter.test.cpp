@@ -1,9 +1,12 @@
 #include <test.hpp>
 
-#include <particle_filter.h>
 
 #include <cmath>
 #include <vector>
+
+#define protected public
+
+#include <particle_filter.h>
 
 TEST(ParticleFilter, Init) {
     ParticleFilter filter{10};
@@ -57,4 +60,19 @@ TEST(ParticleFilter, DataAssociation) {
     ASSERT_EQ(observations[1].id, 2);
     ASSERT_EQ(observations[2].id, 1);
     ASSERT_EQ(observations[3].id, 0);
+}
+
+TEST(ParticleFilter, Resamle) {
+    ParticleFilter filter{5};
+
+    double std_dev[] = {0, 0, 0};
+    filter.init(0, 0, 0, std_dev);
+
+    filter.weights = {10, 0, 0, 0, 0};
+
+    filter.resample();
+
+    for (Particle &particle: filter.particles) {
+        ASSERT_EQ(particle.id, 0);
+    }
 }

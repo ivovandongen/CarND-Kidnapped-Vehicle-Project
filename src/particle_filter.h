@@ -26,6 +26,8 @@ struct Particle {
 
 class ParticleFilter {
 
+protected:
+
     // Number of particles to draw
     int num_particles{0};
 
