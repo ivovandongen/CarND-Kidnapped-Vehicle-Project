@@ -2,6 +2,8 @@
 
 Part of the [Self-Driving Car nanodegree](https://udacity.com/course/self-driving-car-engineer-nanodegree--nd013). Starter code and data from [Udacity](https://github.com/udacity/CarND-Kidnapped-Vehicle-Project).
 
+![png](data/screenshot.png)
+
 # Build
 
 ## From zip file with dependencies included
