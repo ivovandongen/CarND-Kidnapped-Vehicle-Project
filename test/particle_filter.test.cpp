@@ -90,3 +90,17 @@ TEST(ParticleFilter, FindLandmarksInRange) {
     ASSERT_EQ(result.size(), 1);
     ASSERT_EQ(result[0].id, 0);
 }
+
+TEST(ParticleFilter, Transform) {
+    ParticleFilter filter;
+
+    std::vector<LandmarkObs> observations = {
+            {0, 2, 2}
+    };
+
+    auto result = filter.transform(observations, 4, 5, -M_PI_2);
+
+    ASSERT_EQ(result.size(), 1);
+    ASSERT_EQ(result[0].x, 6);
+    ASSERT_EQ(result[0].y, 3);
+}

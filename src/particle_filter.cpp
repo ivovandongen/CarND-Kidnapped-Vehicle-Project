@@ -119,6 +119,17 @@ ParticleFilter::findLandmarksInRange(double x, double y, double range, std::vect
     return result;
 }
 
+std::vector<LandmarkObs>
+ParticleFilter::transform(std::vector<LandmarkObs> observations, double x, double y, double theta) {
+    vector<LandmarkObs> result;
+    for (LandmarkObs observation: observations) {
+        double xNew = cos(theta) * observation.x - sin(theta) * observation.y + x;
+        double yNew = sin(theta) * observation.x + cos(theta) * observation.y + y;
+        result.push_back({observation.id, xNew, yNew});
+    }
+    return result;
+}
+
 void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
                                    const std::vector<LandmarkObs> &observations, const Map &map_landmarks) {
     // TODO: Update the weights of each particle using a mult-variate Gaussian distribution. You can read

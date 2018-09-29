@@ -110,6 +110,16 @@ public:
     std::vector<LandmarkObs>
     findLandmarksInRange(double x, double y, double range, std::vector<Map::single_landmark_s> landmarks);
 
+    /**
+     * Transforms all given coordinates to the reference (x, y, theta)
+     * @param observations the list to transform
+     * @param x the x reference coordinate
+     * @param y the y reference coordinate
+     * @param theta the theta of the reference coordinate
+     * @return the transformed coordinates
+     */
+    std::vector<LandmarkObs> transform(std::vector<LandmarkObs> observations, double x, double y, double theta);
+
     /*
      * Set a particles list of associations, along with the associations calculated world x,y coordinates
      * This can be a very useful debugging tool to make sure transformations are correct and assocations correctly connected
