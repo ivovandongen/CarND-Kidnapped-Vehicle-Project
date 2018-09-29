@@ -76,3 +76,17 @@ TEST(ParticleFilter, Resamle) {
         ASSERT_EQ(particle.id, 0);
     }
 }
+
+TEST(ParticleFilter, FindLandmarksInRange) {
+    ParticleFilter filter;
+
+    std::vector<Map::single_landmark_s> landmark_list = {
+            {0, 3,   4}, // range == 25
+            {1, 3.1, 4} // range == 25.61
+    };
+
+    auto result = filter.findLandmarksInRange(0, 0, 5, landmark_list);
+
+    ASSERT_EQ(result.size(), 1);
+    ASSERT_EQ(result[0].id, 0);
+}

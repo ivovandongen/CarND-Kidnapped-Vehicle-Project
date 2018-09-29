@@ -99,6 +99,17 @@ public:
      */
     void resample();
 
+    /**
+     * Finds the landmarks in range of the given coordinates and returns it
+     * @param x the x coordinate
+     * @param y the y coordinate
+     * @param range the range
+     * @param landmarks the full set of landmarks
+     * @return the landmarks in range
+     */
+    std::vector<LandmarkObs>
+    findLandmarksInRange(double x, double y, double range, std::vector<Map::single_landmark_s> landmarks);
+
     /*
      * Set a particles list of associations, along with the associations calculated world x,y coordinates
      * This can be a very useful debugging tool to make sure transformations are correct and assocations correctly connected
