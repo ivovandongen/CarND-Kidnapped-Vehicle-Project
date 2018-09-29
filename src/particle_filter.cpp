@@ -152,17 +152,45 @@ ParticleFilter::calculateMultivariateGaussianProbability(const LandmarkObs &pred
 }
 
 void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
-                                   const std::vector<LandmarkObs> &observations, const Map &map_landmarks) {
-    // TODO: Update the weights of each particle using a mult-variate Gaussian distribution. You can read
-    //   more about this distribution here: https://en.wikipedia.org/wiki/Multivariate_normal_distribution
-    // NOTE: The observations are given in the VEHICLE'S coordinate system. Your particles are located
-    //   according to the MAP'S coordinate system. You will need to transform between the two systems.
-    //   Keep in mind that this transformation requires both rotation AND translation (but no scaling).
-    //   The following is a good resource for the theory:
-    //   https://www.willamette.edu/~gorr/classes/GeneralGraphics/Transforms/transforms2d.htm
-    //   and the following is a good resource for the actual equation to implement (look at equation
-    //   3.33
-    //   http://planning.cs.uiuc.edu/node99.html
+                                   const std::vector<LandmarkObs> &observations, const Map &map) {
+    // Clear weights
+    weights.clear();
+
+    // Go over all particles
+    for (Particle &particle : particles) {
+
+        // Find nearby landmarks
+        std::vector<LandmarkObs> predictions = findLandmarksInRange(particle.x, particle.y, sensor_range,
+                                                                    map.landmark_list);
+
+        // Transpose observations into the map coordinate space
+        std::vector<LandmarkObs> transposedObservations = transform(observations, particle.x, particle.y,
+                                                                    particle.theta);
+
+        // Associate landmarks and observations
+        dataAssociation(predictions, transposedObservations);
+
+        // Re-calculate weight of the particle
+        particle.weight = 1;
+        for (LandmarkObs &observation : transposedObservations) {
+
+            // Find the prediction for this observation
+            auto it = std::find_if(predictions.begin(), predictions.end(),
+                                   [&observation](const LandmarkObs &prediction) {
+                                       return prediction.id == observation.id;
+                                   });
+
+            // If prediction is found, calculate Multivariate-Gaussian Probability and multiply with previous
+            if (it != predictions.end()) {
+                particle.weight *= calculateMultivariateGaussianProbability(*it, observation, std_landmark);
+            }
+        }
+
+        // Update weights vector for re-sampling
+        weights.push_back(particle.weight);
+    }
+
+    assert(weights.size() == particles.size());
 }
 
 void ParticleFilter::resample() {
