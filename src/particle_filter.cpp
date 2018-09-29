@@ -130,6 +130,27 @@ ParticleFilter::transform(std::vector<LandmarkObs> observations, double x, doubl
     return result;
 }
 
+double
+ParticleFilter::calculateMultivariateGaussianProbability(const LandmarkObs &prediction, const LandmarkObs &observation,
+                                                         double std_landmark[]) {
+    // Re-calculate weight of the particle
+    const double sig_x = std_landmark[0];
+    const double sig_y = std_landmark[1];
+
+    // Make sure the std dev doesn't change
+    assert (sig_x == std_landmark[0]);
+    assert (sig_y == std_landmark[1]);
+
+    // calculate normalization term
+    const double gauss_norm = (1 / (2 * M_PI * sig_x * sig_y));
+
+    double exponent =
+            ((observation.x - prediction.x) * (observation.x - prediction.x)) / (2 * sig_x * sig_x) +
+            ((observation.y - prediction.y) * (observation.y - prediction.y)) / (2 * sig_y * sig_y);
+
+    return gauss_norm * exp(-exponent);
+}
+
 void ParticleFilter::updateWeights(double sensor_range, double std_landmark[],
                                    const std::vector<LandmarkObs> &observations, const Map &map_landmarks) {
     // TODO: Update the weights of each particle using a mult-variate Gaussian distribution. You can read

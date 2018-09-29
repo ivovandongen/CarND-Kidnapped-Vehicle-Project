@@ -104,3 +104,14 @@ TEST(ParticleFilter, Transform) {
     ASSERT_EQ(result[0].x, 6);
     ASSERT_EQ(result[0].y, 3);
 }
+
+TEST(ParticleFilter, CalculateMultivariateGaussianProbability) {
+    double sigma_landmark[2] = {0.3, 0.3};
+    ParticleFilter filter;
+
+    LandmarkObs observation{0, 6, 3};
+    LandmarkObs prediction{0, 5, 3};
+
+    auto result = filter.calculateMultivariateGaussianProbability(prediction, observation, sigma_landmark);
+    ASSERT_FLOAT_EQ(result, 0.00683644777551);
+}

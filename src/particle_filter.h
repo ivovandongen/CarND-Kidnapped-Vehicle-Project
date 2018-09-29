@@ -111,6 +111,16 @@ public:
     findLandmarksInRange(double x, double y, double range, std::vector<Map::single_landmark_s> landmarks);
 
     /**
+     * Calculate Multivariate-Gaussian Probability
+     * @param prediction the predicted associated landmark
+     * @param observation the observerd landmark
+     * @param std_landmark Array of dimension 2 [Landmark measurement uncertainty [x [m], y [m]]] (assumed const for optimalization)
+     * @return the Multivariate-Gaussian Probability
+     */
+    double calculateMultivariateGaussianProbability(const LandmarkObs &prediction, const LandmarkObs &observation,
+                                                    double std_landmark[]);
+
+    /**
      * Transforms all given coordinates to the reference (x, y, theta)
      * @param observations the list to transform
      * @param x the x reference coordinate
