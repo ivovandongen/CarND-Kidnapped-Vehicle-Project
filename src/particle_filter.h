@@ -29,7 +29,7 @@ class ParticleFilter {
 protected:
 
     // Number of particles to draw
-    int num_particles{0};
+    uint num_particles{0};
 
 
     // Flag, if filter is initialized
@@ -47,7 +47,7 @@ public:
      * Constructor
      * @param num_particles_ Number of particles
      */
-    explicit ParticleFilter(int num_particles_ = 1000) : num_particles(num_particles_) {};
+    explicit ParticleFilter(uint num_particles_ = 100);
 
     // Destructor
     ~ParticleFilter() = default;

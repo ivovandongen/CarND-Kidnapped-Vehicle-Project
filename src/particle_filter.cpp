@@ -20,6 +20,12 @@
 
 using namespace std;
 
+ParticleFilter::ParticleFilter(uint num_particles_)
+        : num_particles(num_particles_) {
+    // Prepare the weights
+    weights.resize(num_particles);
+}
+
 void ParticleFilter::init(double x, double y, double theta, double std[]) {
     // Set standard deviations for x, y, and theta
     double std_x = std[0];
